@@ -25,7 +25,9 @@ function checksExistsUserAccount(request, response, next) {
 function checksCreateTodosUserAvailability(request, response, next) {
   const { user } = request;
 
-  if (!user.pro && user.todos.length >= 10) {
+  const checksTaskLimit = user.todos.length >= 10;
+
+  if (!user.pro && checksTaskLimit) {
     response.status(403).json({ error: "you reached the limit of 10 tasks" })
   }
 
